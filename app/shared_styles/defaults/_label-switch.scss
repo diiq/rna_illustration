@@ -1,0 +1,71 @@
+.label-switch {
+  $switch-width: 40px;
+  $switch-padding: 2px;
+  $switch-height: 20px;
+  $switch-radius: $switch-height;
+  $knob-size: $switch-height - ($switch-padding * 2);
+  $knob-radius: $switch-height - ($switch-padding * 2);
+  $knob-width: $knob-size;
+
+  display: inline-block;
+  position: relative;
+  border-radius: $switch-radius;
+  cursor: pointer;
+  width: $switch-width;
+  height: $switch-height;
+  vertical-align: middle;
+  align-self: center;
+
+  input[type="checkbox"] {
+    display: none;
+
+    + .checkbox {
+      @include transition(all 0.3s ease);
+      position: relative;
+      z-index: 0;
+      margin: 0;
+      border: none;
+      border-radius: $switch-radius;
+      background: #e5e5e5;
+      cursor: pointer;
+      padding: 0;
+      width: $switch-width;
+      height: $switch-height;
+
+      &:before {
+        @include position(absolute, 2px 0 0 2px);
+        @include transform(scale(1));
+        @include transition(all 0.3s ease);
+        z-index: 1;
+        border-radius: $switch-radius;
+        background: $white;
+        width: $switch-width - ($switch-padding * 2);
+        height: $knob-radius;
+        content: '';
+      }
+
+      &:after {
+        @include position(absolute, 2px 0 0 2px);
+        @include transition(all 0.3s ease);
+        @include size($knob-size);
+        z-index: $base-z-index + 2;
+        border-radius: $knob-radius;
+        box-shadow: 0 2px 5px rgba(#000, 0.4);
+        background: $white;
+        content: '';
+      }
+    }
+
+    &:checked + .checkbox {
+      background: $light-blue;
+
+      &:before {
+        @include transform(scale(0));
+      }
+
+      &:after {
+        left: $switch-width - $knob-width - ($switch-padding);
+      }
+    }
+  }
+}
