@@ -1,13 +1,12 @@
 gulp = require('gulp')
 argv = require('yargs').argv
-angularFilesort = require('gulp-angular-filesort')
 changed = require('gulp-changed')
 coffee = require('gulp-coffee')
 concat = require('gulp-concat')
 fs = require('fs')
 gutil = require('gulp-util')
+depsOrder = require('gulp-deps-order')
 naturalSort = require('gulp-natural-sort')
-ngAnnotate = require('gulp-ng-annotate')
 plumber = require('gulp-plumber')
 revall = require('gulp-rev-all')
 sourcemaps = require('gulp-sourcemaps')
@@ -20,8 +19,8 @@ gulp.task 'build/dev/js', ->
     .pipe(plumber(compileError))
     .pipe(coffee())
     .pipe(plumber.stop())
-    .pipe(ngAnnotate())
     .pipe(sourcemaps.write())
+    .pipe(depsOrder())
     .pipe(gulp.dest('build/dev'))
 
 gulp.task 'build/dist/main.js', ->
@@ -33,9 +32,8 @@ gulp.task 'build/dist/main.js', ->
 
   gulp.src(['app/**/*.coffee', '!app/**/*Spec.coffee', configFile])
     .pipe(coffee())
-    .pipe(ngAnnotate())
+    .pipe(depsOrder())
     .pipe(naturalSort())
-    .pipe(angularFilesort())
     .pipe(concat('main.js'))
     .pipe(revall())
     .pipe(gulp.dest('build/dist.tmp'))

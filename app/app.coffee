@@ -1,33 +1,49 @@
-# Declare the main module and dependencies
-angular.module('angularSeed', [
-  # External modules
-  'ui.router'
-  'angular-loading-bar'
+# @requires canvas.js, rna/Rope.js
 
-  # Our modules
-  'angularSeed.homepage'
-])
+now = -> (new Date()).getTime()
+rope = new Rope {x: 100, y: 60}, "GCUCUAAAAGAGAG"
+
+setUp = ->
+  canvas.clear()
+  _.each rope.fabricObjects,  (o) -> canvas.add o
+
+setUp()
+
+firstStep = lastStep = now()
+
+firstSelection = null
+canvas.observe 'object:selected', (e) ->
+  if !firstSelection
+    firstSelection = e.target.obj
+    firstSelection?.select()
+  else
+    secondSelection = e.target.obj
+    if firstSelection == secondSelection or firstSelection.pair == secondSelection
+      firstSelection.unpair()
+    else
+      firstSelection.makePair(secondSelection)
+
+    firstSelection.unselect()
+    firstSelection = null
+
+  canvas.deactivateAll()
 
 
-angular.module('angularSeed').config ($locationProvider) ->
-  $locationProvider.html5Mode(enabled: true, requireBase: false)
+setInterval ->
+  thisStep = now()
+  steps = (thisStep - lastStep)
 
-angular.module('angularSeed').config ($urlRouterProvider) ->
-  $urlRouterProvider.otherwise('/')
+  # If you change tabs, steps can be a bajillion. Don't let that
+  # happen.
+  if steps > 50
+    lastStep = thisStep
+    return
 
-angular.module('angularSeed').config ($httpProvider) ->
-  $httpProvider.defaults.withCredentials = true
-  $httpProvider.defaults.headers.delete = {'Content-Type': 'application/json'}
+  canvas.renderAll()
+  lastStep = thisStep
+  rope.step(steps)
+  rope.update()
 
-angular.module('angularSeed').config (cfpLoadingBarProvider) ->
-  cfpLoadingBarProvider.includeSpinner = false
-  cfpLoadingBarProvider.latencyThreshold = 250
-
-# We have to have $state here, to avoid this bug:
-# https://github.com/angular-ui/ui-router/issues/679#issuecomment-31116942
-angular.module('angularSeed').run ($state, $rootScope) ->
-
-  # UI Router silently swallows errors on resolve. This exposes them.
-  $rootScope.$on '$stateChangeError',
-  (event, toState, toParams, fromState, fromParams, error) ->
-    throw error
+  if (thisStep - firstStep) % 1000 < 11
+    console.log "tick"
+, 10

@@ -5,9 +5,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,300,700" rel="stylesheet" type="text/css">
-
-    <link rel="icon" type="image/png" href="/header/favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" type="text/css" href="app.css">
 
     <title>Angular Seed</title>
     <!-- bower:css -->
@@ -26,11 +25,9 @@
     <!-- endinject -->
   </head>
 
-  <body ng-app="angularSeed" ng-strict-di>
-    <ui-view autoscroll="true"></ui-view>
-
-
-    <!-- inject:external_scripts:html -->
-    <!-- endinject -->
+  <body>
+    <div class="container">
+      <canvas id="main-canvas"></canvas>
+    </div>
   </body>
 </html>
