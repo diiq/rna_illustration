@@ -11,7 +11,7 @@ setUp = ->
 
 setUp()
 
-firstStep = lastStep = now()
+lastStep = now()
 
 firstSelection = null
 canvas.observe 'object:selected', (e) ->
@@ -46,6 +46,6 @@ setInterval ->
   rope.step(steps)
   rope.update()
 
-  if (thisStep - firstStep) % 1000 < 11
-    console.log "tick"
-, 10
+  if @ENV.frameRate
+    @document.getElementById('frame-rate').innerHTML = Math.round((1 / steps) * 1000)
+, 0

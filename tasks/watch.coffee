@@ -8,12 +8,12 @@ reload = browserSync.reload
 gulp.task 'watch', ['watch/dev', 'watch/test']
 
 gulp.task 'watch/dev', ['build/dev'], ->
-  gulp.watch ['app/**/*.coffee', '!app/**/*Spec.coffee', 'config/dev.coffee'], ['build/dev/js', 'jasmine', 'build/dev/index.html', reload]
+  gulp.watch ['app/**/*.coffee', '!app/**/*Test.coffee', 'config/dev.coffee'], ['build/dev/js', 'jasmine', 'build/dev/index.html', reload]
   gulp.watch ['app/**/*.scss'], ['build/dev/css', ->]
   gulp.watch ['app/index.html'], ['build/dev/index.html', reload]
 
   # Watch for added and deleted files (only sass and coffee files)
-  gulp.watch ['app/**/*.coffee', 'app/**/*.scss', 'bower_components/**/*.js', '!app/**/*Spec.coffee'], (event) ->
+  gulp.watch ['app/**/*.coffee', 'app/**/*.scss', 'bower_components/**/*.js', '!app/**/*Test.coffee'], (event) ->
     if event.type == "added"
       gulp.start 'build/dev/index.html', ->
         reload()

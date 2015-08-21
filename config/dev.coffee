@@ -1,2 +1,2 @@
 @ENV =
-  global_stuff: "hello"
+  frameRate: true

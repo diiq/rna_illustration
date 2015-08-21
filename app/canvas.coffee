@@ -1,5 +1,5 @@
 @canvas = new fabric.Canvas 'main-canvas',
-  width: 600
+  width: 800
   height: 600
   backgroundColor: "#def"
   position: "relative"

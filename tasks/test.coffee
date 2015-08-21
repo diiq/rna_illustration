@@ -7,7 +7,7 @@ sourcemaps = require('gulp-sourcemaps')
 
 
 gulp.task 'build/test/unit', ->
-  gulp.src(['app/**/*Spec.coffee'])
+  gulp.src(['app/**/*Test.coffee'])
     .pipe(changed('build/test', extension: '.js'))
     .pipe(sourcemaps.init())
     .pipe(plumber(compileError))
