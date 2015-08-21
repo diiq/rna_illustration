@@ -13,5 +13,3 @@ canvasElement.setAttribute('width', canvasElement.width * ratio)
 canvasElement.setAttribute('height', canvasElement.height * ratio)
 canvasElement.getContext('2d').scale(ratio, ratio)
 canvas.hoverCursor = 'pointer'
-
-module.exports = canvas

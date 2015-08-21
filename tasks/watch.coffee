@@ -10,7 +10,6 @@ gulp.task 'watch', ['watch/dev', 'watch/test', 'test/unit/watch']
 gulp.task 'watch/dev', ['build/dev'], ->
   gulp.watch ['app/**/*.coffee', '!app/**/*Spec.coffee', 'config/dev.coffee'], ['build/dev/js', 'build/dev/index.html', reload]
   gulp.watch ['app/**/*.scss'], ['build/dev/css', ->]
-  gulp.watch ['app/**/*.html', '!index.html'], ['build/dev/templates', reload]
   gulp.watch ['app/index.html'], ['build/dev/index.html', reload]
 
   # Watch for added and deleted files (only sass and coffee files)

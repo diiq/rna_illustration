@@ -1,4 +1,2 @@
-angular.module('angularSeed.config', [])
-
-angular.module('angularSeed.config').constant "config",
-  apiBase: "http://localhost:5000"
+@ENV =
+  global_stuff: "hello"

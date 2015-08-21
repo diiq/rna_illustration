@@ -20,11 +20,11 @@ gulp.task 'build/dist', [
   del.sync(['build/dist.tmp'])
 
 
-gulp.task 'build/dist/app.js', ['build/dist/bower.js', 'build/dist/main.js', 'build/dist/templates.js'], ->
+gulp.task 'build/dist/app.js', ['build/dist/bower.js', 'build/dist/main.js'], ->
   # Delete any destination file (since the filename might be different)
   del.sync(['build/dist/app.*.js'])
 
-  gulp.src(['build/dist.tmp/bower.*.js', 'build/dist.tmp/main.*.js', 'build/dist.tmp/templates.*.js'])
+  gulp.src(['build/dist.tmp/bower.*.js', 'build/dist.tmp/main.*.js'])
     .pipe(concat('app.js'))
     .pipe(uglify())
     .pipe(revall())

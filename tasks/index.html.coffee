@@ -1,5 +1,4 @@
 gulp = require('gulp')
-angularFilesort = require('gulp-angular-filesort')
 argv = require('yargs').argv
 bowerFiles = require('main-bower-files')
 gulpif = require('gulp-if')
@@ -7,20 +6,18 @@ htmlmin = require('gulp-htmlmin')
 inject = require('gulp-inject')
 naturalSort = require('gulp-natural-sort')
 revall = require('gulp-rev-all')
+depsOrder = require('gulp-deps-order')
 
 
 # Builds index.html, injecting a bunch of js and css file references
-gulp.task 'build/dev/index.html', ['build/dev/js', 'build/dev/bower', 'build/dev/templates', 'build/dev/css'], ->
+gulp.task 'build/dev/index.html', ['build/dev/js', 'build/dev/bower', 'build/dev/css'], ->
 
   # Get a stream of all bower dependencies (JS and CSS)
   bower = gulp.src(bowerFiles(), { base: "bower_components", read: false })
 
-  # Get a stream of all our JS files (excluding bower files), sorted by angularFileSort()
-  js = gulp.src(['**/*.js', '!bower_components/**/*', '!templates.js'], { cwd: 'build/dev' })
+  js = gulp.src(['**/*.js', '!bower_components/**/*'], { cwd: 'build/dev' })
     .pipe(naturalSort())
-    .pipe(angularFilesort())
-
-  templates = gulp.src('templates.js', { cwd: 'build/dev', read: false })
+    .pipe(depsOrder())
 
   # Get a stream of all our compiled CSS files
   cssfiles = gulp.src(['**/*.css', '!bower_components/**/*.css', '!shared_styles/imports.css'], { cwd: 'build/dev', read: false, nodir: true })
@@ -31,7 +28,6 @@ gulp.task 'build/dev/index.html', ['build/dev/js', 'build/dev/bower', 'build/dev
     .pipe(inject(bower, name: 'bower'))
     .pipe(inject(js))
     .pipe(inject(cssfiles))
-    .pipe(inject(templates, name: 'templates'))
     .pipe(inject gulp.src('app/external_scripts/*.html'),
       starttag: '<!-- inject:external_scripts:{{ext}} -->',
       transform: (filePath, file) ->

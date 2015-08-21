@@ -6,8 +6,6 @@ karma = require('karma').server
 # http://karma-runner.github.io/0.12/config/configuration-file.html
 
 fileList = [
-  'dev/bower_components/angular/angular.js'
-  'test/bower_components/angular-mocks.js'
   'dev/bower_components/**/*.js'
   'test/bower_components/**/*.js'
   'dev/**/*.js'
@@ -16,7 +14,7 @@ fileList = [
 
 gulp.task 'test/unit/watch', ['build/dev', 'build/test/unit'], ->
   karma.start({
-    frameworks: ['jasmine', 'angular-filesort']
+    frameworks: ['jasmine']
     browsers: ['PhantomJS']
     logLevel: 'WARN'
     autoWatch: true
@@ -26,7 +24,7 @@ gulp.task 'test/unit/watch', ['build/dev', 'build/test/unit'], ->
 
 gulp.task 'test/unit/debug', ['build/dev', 'build/test/unit'], ->
   karma.start({
-    frameworks: ['jasmine', 'angular-filesort']
+    frameworks: ['jasmine']
     browsers: ['Chrome']
     logLevel: 'WARN'
     autoWatch: true
@@ -36,7 +34,7 @@ gulp.task 'test/unit/debug', ['build/dev', 'build/test/unit'], ->
 
 gulp.task 'test/unit', ['build/dev', 'build/test/unit'], (cb) ->
   karma.start({
-    frameworks: ['jasmine', 'angular-filesort']
+    frameworks: ['jasmine']
     browsers: ['PhantomJS', 'Chrome', 'Firefox']
     singleRun: true
     basePath: 'build/'
@@ -51,7 +49,6 @@ gulp.task 'test/dist/unit', ['build/dist', 'build/test/unit'], (cb) ->
     basePath: 'build/'
     files: [
       'dist/app.*.js'
-      'test/bower_components/angular-mocks.js'
       'test/**/*.js'
     ]
   }, cb)

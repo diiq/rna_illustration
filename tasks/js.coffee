@@ -32,8 +32,8 @@ gulp.task 'build/dist/main.js', ->
 
   gulp.src(['app/**/*.coffee', '!app/**/*Spec.coffee', configFile])
     .pipe(coffee())
-    .pipe(depsOrder())
     .pipe(naturalSort())
+    .pipe(depsOrder())
     .pipe(concat('main.js'))
     .pipe(revall())
     .pipe(gulp.dest('build/dist.tmp'))

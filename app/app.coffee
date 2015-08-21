@@ -3,6 +3,8 @@
 now = -> (new Date()).getTime()
 rope = new Rope {x: 100, y: 60}, "GCUCUAAAAGAGAG"
 
+console.log canvas
+
 setUp = ->
   canvas.clear()
   _.each rope.fabricObjects,  (o) -> canvas.add o
