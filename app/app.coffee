@@ -1,7 +1,7 @@
-# @requires canvas.js, rna/Rope.js
+# @requires canvas, rna/RNA
 
 now = -> (new Date()).getTime()
-rope = new Rope {x: 100, y: 60}, "GCUCUAAAAGAGAG"
+rope = new RNA {x: 100, y: 60}, "GCUCUAAAAGAGAG"
 
 console.log canvas
 

@@ -1,7 +1,6 @@
-# @require ../base/Base.js
+# @requires ../base/Base
 
-
-class @Rope
+class @RNA
   constructor: (@location, baseString) ->
     @bases = []
 

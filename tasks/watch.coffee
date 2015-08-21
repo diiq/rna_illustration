@@ -5,10 +5,10 @@ path = require('path')
 reload = browserSync.reload
 
 
-gulp.task 'watch', ['watch/dev', 'watch/test', 'test/unit/watch']
+gulp.task 'watch', ['watch/dev', 'watch/test']
 
 gulp.task 'watch/dev', ['build/dev'], ->
-  gulp.watch ['app/**/*.coffee', '!app/**/*Spec.coffee', 'config/dev.coffee'], ['build/dev/js', 'build/dev/index.html', reload]
+  gulp.watch ['app/**/*.coffee', '!app/**/*Spec.coffee', 'config/dev.coffee'], ['build/dev/js', 'jasmine', 'build/dev/index.html', reload]
   gulp.watch ['app/**/*.scss'], ['build/dev/css', ->]
   gulp.watch ['app/index.html'], ['build/dev/index.html', reload]
 
@@ -31,14 +31,14 @@ gulp.task 'watch/dev', ['build/dev'], ->
       del getDestPathFromSrcPath(event.path, 'build/dev'), -> reload()
 
 
-gulp.task 'watch/test', ['build/test/unit'], ->
+gulp.task 'watch/test', ['build/test/unit', 'jasmine'], ->
   # Watch for and rebuild modified test files. No need to reload, as Karma
   # does that itself
-  gulp.watch ['app/**/*Spec.coffee'], ['build/test/unit/specs']
+  gulp.watch ['app/**/*Test.coffee'], ['jasmine']
 
   # Delete deleted test files. Again, Karma watches and reloads itself, so
   # deleting the source file is sufficient
-  gulp.watch ['app/**/*Spec.coffee'], (event) ->
+  gulp.watch ['app/**/*Test.coffee'], (event) ->
     if event.type == "deleted"
       del getDestPathFromSrcPath(event.path, 'build/test')
 
